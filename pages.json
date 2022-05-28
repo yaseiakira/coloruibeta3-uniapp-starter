@@ -1,0 +1,37 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+
+			}
+		}
+    ],
+	
+	"easycom": {
+		"ui-(.*)": "@/ui/components/ui-$1/ui-$1.vue",
+		"app-(.*)": "@/app/components/app-$1/app-$1.vue"
+	},
+	"globalStyle": {
+		"mp-alipay": {
+			/* 支付宝小程序特有相关 */
+			"defaultTitle": "",
+			"transparentTitle": "always",
+			"titlePenetrate": "YES",
+			"allowsBounceVertical": "NO"
+		},
+		"app-plus": {
+			/* App特有相关 */
+			"bounce": "none"
+		},
+		// "disableScroll":true,
+		"pageOrientation": "auto",
+		"navigationBarTitleText": "YaseiAkira",
+		"navigationBarBackgroundColor": "#FFFFFF",
+		"navigationBarTextStyle":"black",
+		"backgroundColor": "#1b1b1b",
+		"backgroundColorTop": "#1b1b1b",
+		"backgroundColorBottom": "#262626"
+		// "navigationStyle": "custom"
+	}
+}
