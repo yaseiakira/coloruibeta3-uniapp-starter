@@ -21,13 +21,13 @@ function upload(options = {}, data = {}, url = 'common/upload') {
 				mask: true
 			})
 		}
-		
+
 		let apiUrl = store.getters.getDomain + store.getters.getApiPath + gid + '/' + url
-		
+
 		if (options.customApiPath) {
 			apiUrl = store.getters.getDomain + options.customApiPath + gid + '/' + url
 		}
-		
+
 		if (options.debug) {
 			setTimeout(() => {
 				resolve(options.debug)
@@ -35,6 +35,8 @@ function upload(options = {}, data = {}, url = 'common/upload') {
 			uni.hideLoading()
 			return
 		}
+
+		const mapFields = store.getters.getResponseMap()
 
 		const task = uni.uploadFile({
 			url: apiUrl,
@@ -49,12 +51,12 @@ function upload(options = {}, data = {}, url = 'common/upload') {
 			success(res) {
 				if (res.statusCode == 200) {
 
-					const {
-						Success,
-						Message,
-						Data,
-						NeedLogin
-					} = JSON.parse(res.data)
+					const resData = JSON.parse(res.data)
+
+					const Success = resData[mapFields.Success]
+					const Message = resData[mapFields.Message]
+					const Data = resData[mapFields.Data]
+					const NeedLogin = resData[mapFields.NeedLogin]
 
 					if (NeedLogin) {
 						uni.showToast({
@@ -120,6 +122,12 @@ function upload(options = {}, data = {}, url = 'common/upload') {
 			}
 		})
 
+		if (options.onProgressUpdate) {
+			task.onProgressUpdate((res) => {
+				options.onProgressUpdate(res)
+			})
+		}
+
 	});
 }
 
@@ -157,6 +165,8 @@ function http(url, data = {}, method = "GET", options = {}) {
 			return
 		}
 
+		const mapFields = store.getters.getResponseMap()
+
 		uni.request({
 			url: apiUrl,
 			data: data,
@@ -165,12 +175,10 @@ function http(url, data = {}, method = "GET", options = {}) {
 			success(res) {
 				if (res.statusCode == 200) {
 
-					const {
-						Success,
-						Message,
-						Data,
-						NeedLogin
-					} = res.data
+					const Success = res.data[mapFields.Success]
+					const Message = res.data[mapFields.Message]
+					const Data = res.data[mapFields.Data]
+					const NeedLogin = res.data[mapFields.NeedLogin]
 
 					if (NeedLogin) {
 						uni.showToast({

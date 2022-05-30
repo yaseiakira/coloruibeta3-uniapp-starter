@@ -14,7 +14,13 @@ export default {
 		main: 'blue', // 设置默认强调色
 		text: 1, // 设置默认字号等级(0-4)
 		domain: baseUrlConfig.baseUrl,
-		apiPath: '/soothsaying/',
+		apiPath: '/api/',
+		responseMap: {
+			Success: 'Success',
+			Message: 'Message',
+			Data: 'Data',
+			NeedLogin: 'NeedLogin'
+		},
 		homePath: '/pages/index/index', // 设置首页路径(一些组件会用到跳回主页，请每个项目设置好！)
 		tabbar: [{
 				title: '文档',
@@ -283,7 +289,7 @@ export default {
 		},
 	},
 	mutations: {
-		 
+
 	},
 	actions: {}
 }
