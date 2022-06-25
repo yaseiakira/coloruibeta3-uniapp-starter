@@ -16,6 +16,7 @@ Uniapp项目,集成了ColorUIBeta3,快速项目模板
 + 位置 `/app/store/index`
 + domain: 服务器接口域名, 不包括最后的 /
 + apiPath: 接口网关, 前后包含/, 如: /api/
++ loginPath : 登录页面Path, 请求遇到需要重新登录的情况会自动导航到登录页
 
 + 注意, domain 来自于 新的配置文件: `/app/config/baseurl-dev.js 开发环境接口域名` , `/app/config/baseurl-prod.js 生产环境接口域名`
 
@@ -31,10 +32,12 @@ Uniapp项目,集成了ColorUIBeta3,快速项目模板
 
 ## 自定义 http
 + colorUIBeta3 /ui/js/request.js 已加入全局request, this.$request 即可使用
-+ 基于上述request, 在 app/js/http.js 重新定义了一个全局request
-+ 定义: 
++ 基于上述request, 在 app/js/http.js 重新定义了一个 request
++ 使用: 
 ```
-this.$http(url,data = {}, method = "GET", options = {
+import http from '@/app/js/http.js'
+
+http.request(url,data = {}, method = "GET", options = {
     loading:String | Boolean
     customApiPath: String,
     debug: Object | Boolean
@@ -59,15 +62,16 @@ this.$http(url,data = {}, method = "GET", options = {
 |debug|是否调试模式|传 true 或者其他 对象, 将不会实际请求服务器接口, 而是默认延迟1s后, 直接 resolve(debug), 适用于后端接口没提供(未写好), 但是又实际需要测试接口调用成功后的的前端交互逻辑的时候使用|
 
 ## 自定义上传
-+ 使用 `this.$upload()` 
-+ 定义: 
++ 使用: 
 ```
-this.$upload(options = {
+import http from '@/app/js/http.js'
+
+http.upload(url,filePath,data = {},options = {
     onProgressUpdate:Function
     loading:String | Boolean
     customApiPath: String,
     debug: Object | Boolean
-},data = {}, url = 'common/upload')
+})
 
 ```
 
@@ -75,9 +79,11 @@ this.$upload(options = {
 
 |名称   |说明   |示例   |
 |-----|----|----|
-|options| 选项参数 | {loading:true}, 大多数参数同 this.$http的options参数,详细说明参看下方|
-| data | 请求参数 | {id:1}, 额外的上传参数 |
 |url   |接口地址,不包括域名和接口网关,域名和网关 在 /app/store 里面配置   | common/upload   |
+|filePath   | 要上传文件资源的路径, 来自 uni.chooseFile 或 uni.chooseImage  |
+|options| 选项参数 | {loading:true}, 大多数参数同 http.request的options参数,详细说明参看下方|
+| data | 请求参数 | {id:1}, 额外的上传参数 |
+
 
 + options参数说明
 

@@ -1,7 +1,6 @@
-import Vue from 'vue'
 import store from '@/ui/store'
 
-function upload(options = {}, data = {}, url = 'common/upload') {
+function upload(url, filePath, data = {}, options = {}) {
 	return new Promise((resolve, reject) => {
 
 		let header = {
@@ -13,8 +12,6 @@ function upload(options = {}, data = {}, url = 'common/upload') {
 			header['api-token'] = authInfo.token
 		}
 
-		const gid = authInfo.gid || 0
-
 		if (options.loading) {
 			uni.showLoading({
 				title: typeof options.loading == Boolean ? '上传中...' : options.loading,
@@ -22,10 +19,10 @@ function upload(options = {}, data = {}, url = 'common/upload') {
 			})
 		}
 
-		let apiUrl = store.getters.getDomain + store.getters.getApiPath + gid + '/' + url
+		let apiUrl = store.getters.getDomain + store.getters.getApiPath + '/' + url
 
 		if (options.customApiPath) {
-			apiUrl = store.getters.getDomain + options.customApiPath + gid + '/' + url
+			apiUrl = store.getters.getDomain + options.customApiPath + '/' + url
 		}
 
 		if (options.debug) {
@@ -36,12 +33,11 @@ function upload(options = {}, data = {}, url = 'common/upload') {
 			return
 		}
 
-		const mapFields = store.getters.getResponseMap()
+		const mapFields = store.getters.getResponseMap
 
 		const task = uni.uploadFile({
 			url: apiUrl,
-			// 需要上传的文件列表。使用 files 时，filePath 和 name 不生效。App、H5（ 2.6.15+）
-			filePath: options.filePath, // 要上传文件资源的路径。
+			filePath, // 要上传文件资源的路径。
 			name: 'file',
 			// #ifdef  H5
 			withCredentials: true,
@@ -131,7 +127,7 @@ function upload(options = {}, data = {}, url = 'common/upload') {
 	});
 }
 
-function http(url, data = {}, method = "GET", options = {}) {
+function request(url, data = {}, method = "GET", options = {}) {
 	return new Promise(function(resolve, reject) {
 		let header = {
 			"Accept": "application/json",
@@ -142,8 +138,6 @@ function http(url, data = {}, method = "GET", options = {}) {
 			header['api-token'] = authInfo.token
 		}
 
-		const gid = authInfo.gid || 0
-
 		if (options.loading) {
 			uni.showLoading({
 				title: typeof options.loading == Boolean ? '加载中...' : options.loading,
@@ -151,10 +145,10 @@ function http(url, data = {}, method = "GET", options = {}) {
 			})
 		}
 
-		let apiUrl = store.getters.getDomain + store.getters.getApiPath + gid + '/' + url
+		let apiUrl = store.getters.getDomain + store.getters.getApiPath + '/' + url
 
 		if (options.customApiPath) {
-			apiUrl = store.getters.getDomain + options.customApiPath + gid + '/' + url
+			apiUrl = store.getters.getDomain + options.customApiPath + '/' + url
 		}
 
 		if (options.debug) {
@@ -165,7 +159,7 @@ function http(url, data = {}, method = "GET", options = {}) {
 			return
 		}
 
-		const mapFields = store.getters.getResponseMap()
+		const mapFields = store.getters.getResponseMap
 
 		uni.request({
 			url: apiUrl,
@@ -189,7 +183,7 @@ function http(url, data = {}, method = "GET", options = {}) {
 							uni.removeStorageSync('auth');
 							store.commit('setLogin', false);
 							uni.reLaunch({
-								url: '/pages/login/login'
+								url: store.getters.getLoginPath
 							});
 						}, 1500)
 					}
@@ -260,6 +254,9 @@ function http(url, data = {}, method = "GET", options = {}) {
 	});
 }
 
-Vue.prototype.$http = http
-Vue.prototype.$upload = upload
+const http = {
+	request,
+	upload
+}
+
 export default http

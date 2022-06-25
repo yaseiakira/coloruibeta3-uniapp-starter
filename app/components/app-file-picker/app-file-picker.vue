@@ -25,6 +25,10 @@
 </template>
 
 <script>
+	import {
+		upload,
+		deleteFile
+	} from '@/api/common/common.js'
 	export default {
 		name: 'AppFilePicker',
 		model: {
@@ -74,9 +78,9 @@
 				if (index != -1) {
 					const item = this.files[index]
 					if (item.status == 1) {
-						this.$http('common/deletefile', {
+						deleteFile({
 							url: item.Url
-						}, 'POST', {
+						}, {
 							debug: true
 						}).then(() => {}).catch(() => {})
 					}
@@ -138,13 +142,12 @@
 								}
 								this.files.push(item)
 
-								this.$upload({
-									filePath: f,
+								upload(f, this.customData, {
 									// loading: `正在上传${index + 1}/{len}`,
-									debug:[{
-										Url:'http://v9.emd315.com/content/images/media-empty.png'
+									debug: [{
+										Url: 'http://v9.emd315.com/content/images/media-empty.png'
 									}]
-								}, this.customData).then(data => {
+								}).then(data => {
 									const index = this.files.findIndex(p => p.Id == item.Id)
 									if (data && data.length) {
 										const {

@@ -26,12 +26,12 @@
 			}
 		},
 		onLoad() {
-			// const auth = uni.getStorageSync('auth')
-			// if (!auth) {
-			// 	uni.reLaunch({
-			// 		url: '../public/login'
-			// 	})
-			// }
+			const auth = uni.getStorageSync('auth')
+			if (!auth) {
+				uni.reLaunch({
+					url: '../public/login'
+				})
+			}
 		},
 		methods: {
 

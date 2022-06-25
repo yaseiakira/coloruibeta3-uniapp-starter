@@ -22,6 +22,7 @@ export default {
 			NeedLogin: 'NeedLogin'
 		},
 		homePath: '/pages/index/index', // 设置首页路径(一些组件会用到跳回主页，请每个项目设置好！)
+		loginPath: '/pages/public/login',
 		tabbar: [{
 				title: '文档',
 				icon: '/static/tab_icon/document.png',
@@ -287,6 +288,12 @@ export default {
 		getApiPath: state => {
 			return state.apiPath
 		},
+		getResponseMap: state => {
+			return state.responseMap
+		},
+		getLoginPath: state => {
+			return state.loginPath
+		}
 	},
 	mutations: {
 

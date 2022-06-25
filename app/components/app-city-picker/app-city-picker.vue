@@ -24,6 +24,9 @@
 </template>
 
 <script>
+	import {
+		cities
+	} from '@/api/common/common.js'
 	export default {
 		name: 'AppCityPicker',
 		model: {
@@ -46,7 +49,7 @@
 			}
 		},
 		created() {
-			
+
 			this.getCities()
 			this.initForm()
 		},
@@ -58,7 +61,7 @@
 		methods: {
 			getCities() {
 				this.loading = true
-				this.$http('common/cities', null, 'GET', {
+				cities({
 					debug: [{
 						code: 1,
 						name: '贵州省',

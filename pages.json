@@ -5,9 +5,17 @@
 			"style": {
 
 			}
+		}, {
+			"path": "pages/public/login",
+			"style": {
+				"navigationBarTitleText": "欢迎使用,请登录",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			}
+
 		}
-    ],
-	
+	],
+
 	"easycom": {
 		"ui-(.*)": "@/ui/components/ui-$1/ui-$1.vue",
 		"app-(.*)": "@/app/components/app-$1/app-$1.vue"
@@ -28,7 +36,7 @@
 		"pageOrientation": "auto",
 		"navigationBarTitleText": "YaseiAkira",
 		"navigationBarBackgroundColor": "#FFFFFF",
-		"navigationBarTextStyle":"black",
+		"navigationBarTextStyle": "black",
 		"backgroundColor": "#1b1b1b",
 		"backgroundColorTop": "#1b1b1b",
 		"backgroundColorBottom": "#262626"
