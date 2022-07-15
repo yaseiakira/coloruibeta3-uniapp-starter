@@ -30,11 +30,11 @@
 	export default {
 		name: 'AppCityPicker',
 		model: {
-			prop: 'values',
+			prop: 'value',
 			event: 'change'
 		},
 		props: {
-			values: {
+			value: {
 				type: String
 			}
 		},
@@ -54,7 +54,7 @@
 			this.initForm()
 		},
 		watch: {
-			values: function() {
+			value: function() {
 				this.initForm()
 			}
 		},
@@ -106,8 +106,8 @@
 			},
 			initForm() {
 
-				if (this.values && this.values.length) {
-					const array = this.$ajutil.convertToJson(this.values, 'array')
+				if (this.value && this.value.length) {
+					const array = this.$ajutil.convertToJson(this.value, 'array')
 					if (array.length) {
 						this.formData.code = array[array.length - 1].Code
 					}

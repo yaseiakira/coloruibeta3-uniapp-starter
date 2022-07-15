@@ -32,7 +32,7 @@
 	export default {
 		name: 'AppFilePicker',
 		model: {
-			prop: 'values',
+			prop: 'value',
 			event: 'change'
 		},
 		props: {
@@ -40,9 +40,8 @@
 				type: String,
 				default: '上传图片'
 			},
-			values: {
-				type: [String, Array],
-				default: []
+			value: {
+				type: [String, Array]
 			},
 			mutil: {
 				type: Boolean,
@@ -62,7 +61,7 @@
 			}
 		},
 		watch: {
-			values: {
+			value: {
 				deep: true,
 				handler: function() {
 					this.initFiles()
@@ -103,8 +102,8 @@
 
 			},
 			initFiles() {
-				if (this.values && this.values.length && typeof this.values == Object) {
-					this.files = this.values.map(p => {
+				if (this.value && this.value.length && typeof this.value == Object) {
+					this.files = this.value.map(p => {
 						return {
 							Id: this.$util.getUuid(),
 							Url: p,
@@ -112,14 +111,14 @@
 						}
 					})
 				}
-				if (this.values && typeof this.values == String) {
+				if (this.value && typeof this.value == String) {
 					this.files = [{
 						Id: this.$util.getUuid(),
-						Url: this.values,
+						Url: this.value,
 						status: 1
 					}]
 				}
-				if (!this.values) {
+				if (!this.value) {
 					this.files = []
 				}
 			},
