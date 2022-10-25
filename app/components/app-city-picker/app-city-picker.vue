@@ -31,7 +31,7 @@
 		name: 'AppCityPicker',
 		model: {
 			prop: 'value',
-			event: 'change'
+			event: 'input'
 		},
 		props: {
 			value: {
@@ -102,7 +102,7 @@
 					}
 				}))
 
-				this.$emit('change', json)
+				this.$emit('input', json)
 			},
 			initForm() {
 

@@ -33,7 +33,7 @@
 		name: 'AppFilePicker',
 		model: {
 			prop: 'value',
-			event: 'change'
+			event: 'input'
 		},
 		props: {
 			text: {
@@ -90,14 +90,14 @@
 			updateValues() {
 				const successFiles = this.files.filter(p => p.status == 1)
 				if (successFiles.length) {
-					this.$emit('change', this.mutil ? successFiles.map(p => {
+					this.$emit('input', this.mutil ? successFiles.map(p => {
 						return {
 							Id: p.Id,
 							Url: p.Url
 						}
 					}) : (successFiles[0].Url || ''))
 				} else {
-					this.$emit('change', this.mutil ? [] : '')
+					this.$emit('input', this.mutil ? [] : '')
 				}
 
 			},
